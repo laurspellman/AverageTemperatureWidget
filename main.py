@@ -92,7 +92,7 @@ def call_api(url: str, params: str) -> tuple[int, object]:
     '''
     Takes in a url string and query params and uses requests library to get response
     '''
-    resp = requests.get(url+params)
+    resp = requests.get(url+params, timeout=5)
     return resp.status_code, json.loads(resp.text)
 
 
