@@ -50,12 +50,12 @@ def main():
                 lat = jsonresp[0]['lat']
                 lon = jsonresp[0]['lon']
             except IndexError as e:
-                logging.warning(f'Due to request error in geocoder, Skipping {city}, \
-                {state}. error: {e},  Response: {jsonresp}')
+                logging.warning('Due to request error in geocoder, Skipping  %s, \
+                 %s. error:  %s,  Response: %s', city, state, e, jsonresp )
                 break
         else:
-            logging.warning(f'Due to request error in geocoder, Skipping {city}, \
-            {state}. Response: {jsonresp}')
+            logging.warning('Due to request error in geocoder, Skipping %s, \
+            %s. Response: %s', city, state, jsonresp)
             break
         # Query forecast api with lat/lon to get temps
         qparams = f'?lat={lat}&lon={lon}&appid={OPENWEATHER_API_KEY}'
@@ -64,8 +64,8 @@ def main():
         if code == 200:
             temps[f'{city}, {state}'] = jsonresp['main']['temp']
         else:
-            logging.warning(f'Due to request error in weather url, Skipping \
-            {city}, {state}. Response:  {jsonresp}')
+            logging.warning('Due to request error in weather url, Skipping \
+            %s, %s. Response:  %s', city, state, jsonresp)
             break
     # find average and display
     print(f"The following temps are listed for state's capitals that begin \
@@ -75,11 +75,9 @@ def main():
     if len(temps) == 0:
         print('no temps to average!')
         print('Bye!')
-        exit
     avg = avg_temp(temps.values())
     print(f'The average temperature of the current temperatures: {avg} Kelvin')
     print('bye!')
-    exit
 
 def avg_temp(temps: list) -> float:
     '''
