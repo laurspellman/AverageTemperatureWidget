@@ -15,17 +15,18 @@ import requests
 import json
 import logging
 import polars as pl
-from api_secrets import OPENWEATHER_API_KEY, geocoding_url, forecast_url
+from api_secrets import OPENWEATHER_API_KEY, geocoding_url, current_weather_url
 
 def main():
-    avg_temp = {}
-    # Get argument: letter from user 
+
+    # setup dict to hold the temps to be averaged
+    temps = {}
+
+    # Get valid argument: a letter from user 
     letter = input(f'Please enter the first letter of the state for which you would like the average temp: ')
-    # Check if the input is a single letter
     while not(len(letter) == 1 and letter.isalpha()):
         letter = input("Invalid input. Please enter a single letter: ")
-
-    print(f"Selecting states that begin with the following letter: {letter.upper()}")
+    print(f"Selecting states that begin with the letter {letter.upper()}")
     # Get states that begin with given letter
     df = pl.read_json('us_states.json',
                       schema={ 
@@ -34,13 +35,16 @@ def main():
                         "capital": pl.String
                         }
                         )
-    
     df = df.filter(pl.col('state').str.starts_with(f'{letter.upper()}'))
-    # query weather for each capital of the selected states
-    # TODO: Need clarification on what the user wants for "average temp"
+
+    # two queries are required to get the current weather: 
+    # 1 - pass the name of city, state, and country to the geocoder api -> lat, lon returned
+    # 2 - given lat, lon -> current weather data returned
     for row in df.rows():
+        print('***********************************************************************************')
         city = row[2]
         state = row[1]
+
         # Query geocoder api to get from city name -> lat/lon
         qparams = f'?q={city},{state},US&appid={OPENWEATHER_API_KEY}'
         code, jsonresp = call_api(geocoding_url, qparams)
@@ -57,32 +61,33 @@ def main():
 
         # Query forecast api with lat/lon to get temps
         qparams = f'?lat={lat}&lon={lon}&appid={OPENWEATHER_API_KEY}'
-        code, jsonresp = call_api(forecast_url, qparams)
+        code, jsonresp = call_api(current_weather_url, qparams)
         # pull average weather out of response
         if code == 200:
-           # TODO: clarify this here
-           avg_temp[f'{city},{state}'] = 'test value'
+           temps[f'{city}, {state}'] = jsonresp['main']['temp']
         else:
-            logging.warning(f'Due to request error in forecast url, Skipping {city}, {state}. Response:  {jsonresp}')
+            logging.warning(f'Due to request error in weather url, Skipping {city}, {state}. Response:  {jsonresp}')
             break 
 
-    print(f"The following average temps are listed for state's capitals that begin with: {letter}")
-    for city in avg_temp:
-        print(f'{city}: {avg_temp[city]}')
-    if len(avg_temp) ==0:
-        print('None')
-    print('Bye!')
-    
+    # find average and display
+    print(f"The following temps are listed for state's capitals that begin with: {letter.upper()}")
+    for city in temps:
+        print(f'{city}: {temps[city]} Kelvin')
+    if len(temps) ==0:
+        print('no temps to average!')
+        print('Bye!')
+    avg = avg_temp(temps.values())
+    print(f'The average temperature of the current temperatures: {avg} Kelvin')
+    print('bye!')
+
        
-def get_avg_temp(temps: pl.Series) -> pl.Float32:
-    # TODO: write the averaging 
-    ...
+def avg_temp(temps: list) -> float:
+    return sum(temps)/len(temps)
+
 
 def call_api(url: str, params: str) -> tuple[int, object]:
     resp = requests.get(url+params)
-    # read response into python obj and return
     return resp.status_code, json.loads(resp.text)
-
 
 
 

@@ -1,4 +1,4 @@
-# docker file, Image, Container
+# docker file
 FROM python:3.10
 
 ADD main.py api_secrets.py us_states.json ./

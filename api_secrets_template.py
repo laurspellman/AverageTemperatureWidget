@@ -6,4 +6,4 @@
 OPENWEATHER_API_KEY = '<SAVE KEY HERE!>'
 
 geocoding_url = 'http://api.openweathermap.org/geo/1.0/direct'
-forecast_url = 'http://api.openweathermap.org/data/2.5/forecast'
+current_weather_url = 'https://api.openweathermap.org/data/2.5/weather'
