@@ -14,7 +14,7 @@ This relies on the following apis:
 
 2) Clone this repo to your local machine. 
 
-4) In your IDE or text editor, Open the file api_secrets_template.py and save a copy in the same directory as api_secrets.py. Copy the generated API key from the previous step in the api_secrets.py file. (Do not commit this file to Git!)
+4) In your IDE or text editor, Open the file 'api_secrets_template.py'. Save a copy in the same directory and name it 'api_secrets.py'. Copy the generated API key from the previous step in the 'api_secrets.py' file. (Do not commit this file to Git!)
 
 ```python
 # Save the API key here! 
