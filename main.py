@@ -4,11 +4,7 @@ from the user. Given that letter, the program finds states that begin
 with the letter and finds and displays the average temperature of each 
 state's capitol city
 
-usage: 
-$ python main.py "a"
-
-output:
-TODO: add output
+Makes use of Docker & Polars
 
 '''
 import requests
@@ -27,6 +23,7 @@ def main():
     while not(len(letter) == 1 and letter.isalpha()):
         letter = input("Invalid input. Please enter a single letter: ")
     print(f"Selecting states that begin with the letter {letter.upper()}")
+
     # Get states that begin with given letter
     df = pl.read_json('us_states.json',
                       schema={ 
@@ -62,6 +59,7 @@ def main():
         # Query forecast api with lat/lon to get temps
         qparams = f'?lat={lat}&lon={lon}&appid={OPENWEATHER_API_KEY}'
         code, jsonresp = call_api(current_weather_url, qparams)
+        
         # pull average weather out of response
         if code == 200:
            temps[f'{city}, {state}'] = jsonresp['main']['temp']
@@ -88,7 +86,6 @@ def avg_temp(temps: list) -> float:
 def call_api(url: str, params: str) -> tuple[int, object]:
     resp = requests.get(url+params)
     return resp.status_code, json.loads(resp.text)
-
 
 
 if __name__ == "__main__":
