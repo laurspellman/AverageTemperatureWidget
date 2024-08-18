@@ -20,7 +20,7 @@ def main():
     # setup dict to hold the temps to be averaged
     temps = {}
     # Get valid argument: a letter from user
-    letter = input(f'Please enter the first letter of the state for which you would \
+    letter = input('Please enter the first letter of the state for which you would \
     like the average temp: ')
     while not(len(letter) == 1 and letter.isalpha()):
         letter = input("Invalid input. Please enter a single letter: ")
@@ -51,7 +51,7 @@ def main():
                 lon = jsonresp[0]['lon']
             except IndexError as e:
                 logging.warning(f'Due to request error in geocoder, Skipping {city}, \
-                {state}. Response: {jsonresp}')
+                {state}. error: {e},  Response: {jsonresp}')
                 break
         else:
             logging.warning(f'Due to request error in geocoder, Skipping {city}, \
@@ -70,26 +70,30 @@ def main():
     # find average and display
     print(f"The following temps are listed for state's capitals that begin \
     with: {letter.upper()}")
-    for city in temps:
+    for city in temps.items():
         print(f'{city}: {temps[city]} Kelvin')
-    if len(temps) ==0:
+    if len(temps) == 0:
         print('no temps to average!')
         print('Bye!')
-        return
+        exit
     avg = avg_temp(temps.values())
     print(f'The average temperature of the current temperatures: {avg} Kelvin')
     print('bye!')
-    return
-
+    exit
 
 def avg_temp(temps: list) -> float:
+    '''
+    takes in a list of floats and returns the average
+    '''
     if len(temps) > 0:
         return sum(temps)/len(temps)
-    else:
-        return None
+    return None
 
 
 def call_api(url: str, params: str) -> tuple[int, object]:
+    '''
+    Takes in a url string and query params and uses requests library to get response
+    '''
     resp = requests.get(url+params)
     return resp.status_code, json.loads(resp.text)
 
