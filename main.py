@@ -70,14 +70,16 @@ def main():
     # find average and display
     print(f"The following temps are listed for state's capitals that begin \
     with: {letter.upper()}")
-    for city in temps.items():
-        print(f'{city}: {temps[city]} Kelvin')
+    for entry in temps.items():
+        print(f'{entry[0]} : {entry[1]} Kelvin')
     if len(temps) == 0:
         print('no temps to average!')
         print('Bye!')
+        return None
     avg = avg_temp(temps.values())
     print(f'The average temperature of the current temperatures: {avg} Kelvin')
     print('bye!')
+    return None
 
 def avg_temp(temps: list) -> float:
     '''
