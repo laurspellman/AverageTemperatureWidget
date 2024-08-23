@@ -79,6 +79,7 @@ def main():
     avg = avg_temp(temps.values())
     print(f'The average temperature of the current temperatures: {avg} Kelvin')
     print('bye!')
+    return None
 
 def avg_temp(temps: list) -> float:
     '''
