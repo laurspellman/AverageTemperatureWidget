@@ -4,13 +4,13 @@ Average Temperature Widget is a dockerized Python command line application for f
 
 This relies on the following apis:
 1) [OpenWeatherMap Geocoder API](https://openweathermap.org/api/geocoding-api#direct)
-2) [OpenWeatherMap Current Weather API](https://openweathermap.org/api/geocoding-api#direct)
+2) [OpenWeatherMap Current Weather API](https://openweathermap.org/current)
 
 ## Installation
 
-1) Ensure Docker Desktop is installed anf running on local machine: [MacOS](https://docs.docker.com/desktop/install/mac-install/) [Windows](https://docs.docker.com/desktop/install/windows-install/) [Linux](https://docs.docker.com/desktop/install/linux-install/)
+1) Ensure Docker Desktop is installed and running on local machine before proceeding: [MacOS](https://docs.docker.com/desktop/install/mac-install/) [Windows](https://docs.docker.com/desktop/install/windows-install/) [Linux](https://docs.docker.com/desktop/install/linux-install/)
 
-3) Sign up for an account with OpenWeatherMap and generate an [API key](https://home.openweathermap.org/api_keys). Reach out to Laura if you have any issues generating a key
+3) Sign up for an account with [OpenWeatherMap](https://openweathermap.org/price). Generate an API key by clicking the 'Get An API Key' button under the free tier Professional Collection. Reach out to Laura if you have any issues generating a key
 
 2) Clone this repo to your local machine. 
 
