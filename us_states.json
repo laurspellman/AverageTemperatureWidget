@@ -10,11 +10,6 @@
     "capital": "Juneau"
   },
   {
-    "state": "American Samoa",
-    "abbreviation": "AS",
-    "capital": "Pago Pago"
-  },
-  {
     "state": "Arizona",
     "abbreviation": "AZ",
     "capital": "Phoenix"
@@ -50,11 +45,6 @@
     "capital": "Washington"
   },
   {
-    "state": "Federated States of Micronesia",
-    "abbreviation": "FM",
-    "capital": "Palikir"
-  },
-  {
     "state": "Florida",
     "abbreviation": "FL",
     "capital": "Tallahassee"
@@ -63,11 +53,6 @@
     "state": "Georgia",
     "abbreviation": "GA",
     "capital": "Atlanta"
-  },
-  {
-    "state": "Guam",
-    "abbreviation": "GU",
-    "capital": "Hagåtña"
   },
   {
     "state": "Hawaii",
@@ -190,11 +175,6 @@
     "capital": "Bismarck"
   },
   {
-    "state": "Northern Mariana Islands",
-    "abbreviation": "MP",
-    "capital": "Saipan"
-  },
-  {
     "state": "Ohio",
     "abbreviation": "OH",
     "capital": "Columbus"
@@ -210,19 +190,9 @@
     "capital": "Salem"
   },
   {
-    "state": "Palau",
-    "abbreviation": "PW",
-    "capital": "Ngerulmud"
-  },
-  {
     "state": "Pennsylvania",
     "abbreviation": "PA",
     "capital": "Harrisburg"
-  },
-  {
-    "state": "Puerto Rico",
-    "abbreviation": "PR",
-    "capital": "San Juan"
   },
   {
     "state": "Rhode Island",
@@ -258,11 +228,6 @@
     "state": "Vermont",
     "abbreviation": "VT",
     "capital": "Montpelier"
-  },
-  {
-    "state": "Virgin Islands",
-    "abbreviation": "VI",
-    "capital": "Charlotte Amalie"
   },
   {
     "state": "Virginia",
