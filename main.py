@@ -10,12 +10,26 @@ Makes use of Docker & Polars
 import json
 import logging
 import requests
+import time
 import polars as pl
 from api_secrets import OPENWEATHER_API_KEY, GEOCODING_URL, CURRENT_WEATHER_URL
 
+
+def time_it(func):
+    def wrapper(*args, **kwargs):
+        start_time = time.time()
+        result = func(*args, **kwargs)
+        end_time = time.time()
+        duration = end_time - start_time
+        print(f"Function '{func.__name__}' took {duration:.6f} seconds to execute")
+        return result
+    return wrapper
+
+
+@time_it
 def main():
     '''
-    Run this! Contains the code for the command line application
+    Run this! Contains the code for the command line appliScation
     '''
     # setup dict to hold the temps to be averaged
     temps = {}
@@ -62,7 +76,7 @@ def main():
         code, jsonresp = call_api(CURRENT_WEATHER_URL, qparams)
         # pull average weather out of response
         if code == 200:
-            temps[f'{city}, {state}'] = jsonresp['main']['temp']
+            temps[f'{city}, {state}'] = jsonresp['main']['humidity']
         else:
             logging.warning('Due to request error in weather url, Skipping \
             %s, %s. Response:  %s', city, state, jsonresp)
@@ -73,14 +87,16 @@ def main():
     for entry in temps.items():
         print(f'{entry[0]} : {entry[1]} Kelvin')
     if len(temps) == 0:
-        print('no temps to average!')
+        print('no humidity to average!')
         print('Bye!')
         return None
     avg = avg_temp(temps.values())
-    print(f'The average temperature of the current temperatures: {avg} Kelvin')
+    print(f'The average humidity of the current humidities: {avg}')
     print('bye!')
     return None
 
+
+@time_it
 def avg_temp(temps: list) -> float:
     '''
     takes in a list of floats and returns the average
@@ -90,6 +106,7 @@ def avg_temp(temps: list) -> float:
     return None
 
 
+@time_it
 def call_api(url: str, params: str) -> tuple[int, object]:
     '''
     Takes in a url string and query params and uses requests library to get response
